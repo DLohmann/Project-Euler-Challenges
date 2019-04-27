@@ -41,13 +41,15 @@ namespace Euler {
             for (int i = 1; i < currencyArr.Length; i++) {
                 currencyArr [i] = 0;
             }
-
+            
+            // The problem is that all these ways include duplicate ways
+            /*
             for (int amount = 0; amount < currencyArr.Length; amount++) {
                 
                 Console.WriteLine("Number of ways to get to " + amount + " pence = " + currencyArr[amount]);
 
                 for (int coinType = 0; coinType < currencyTypes.Length; coinType++) {
-                    if (amount + currencyTypes[coinType] < currencyArr.Length) {
+                    if (            amount + currencyTypes[coinType] < currencyArr.Length) {
                         currencyArr[amount + currencyTypes[coinType]] += currencyArr[amount];
                     } else {    // no more currency amounts within range of the coins
                         break;
@@ -55,6 +57,46 @@ namespace Euler {
                 }
 
             }
+            */
+
+            // This takes advantage of the fact that numWaysToSum(n) = numWaysToSum(n-1) + numWaysToSum(n-2) + numWaysToSum(n-5) + numWaysToSum(n-10) + ... for each coin type
+            // So numWaysToSum(n) = sum(numWaysToSum(n - coinAmount) for coinAmount in coinAmounts where n - coinAmount >= 0)
+            /*
+            for (int amount = 1; amount < currencyArr.Length; amount++) {
+                ulong sumWays = 0;
+                for (int coinType = 0; coinType < currencyTypes.Length; coinType++) {
+                    if (amount - currencyTypes[coinType] >= 0) {
+                        sumWays += currencyArr[amount - currencyTypes[coinType]];
+                    } else {
+                        break;
+                    }
+                    
+                }
+                currencyArr[amount] = sumWays;
+            }
+            */
+
+
+
+
+            /* 
+            for (int coinType = 1; coinType < currencyTypes.Length; coinType++) {
+                for (int amount = currencyTypes[coinType]; amount < currencyArr.Length; amount++) {
+                    currencyArr[amount] += 1;
+                }
+            }
+            */
+
+            /*
+            int [] coinAmount = new int[currencyTypes.Length];  // C# pre-allocates this with 0's
+            // Adjust 1 coin amount at a time to ensure that it is still under n. Sort of like an optimization algorithm does.
+            for (int amount = 1; amount < currencyArr.Length; amount++) {
+                int sumWays
+            }
+            */
+
+            // Adjust 1 coin amount at a time to ensure it is still under 200. Then recored the appropriate sum
+            //while
 
             // Print the entire currency array
             Console.WriteLine ("\n\nEntire Coin Array:");
